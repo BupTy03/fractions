@@ -18,7 +18,7 @@ using std::is_unsigned;
 using std::to_string;
 
 template<typename T>
-constexpr enable_if_t<is_integral<T>::value && is_signed<T>::value, T> 
+constexpr enable_if_t<is_integral<T>::value && is_signed<T>::value, T>
 	abs_integral(T val)
 	{ 
 		return val < 0 ? -val : val;
@@ -64,7 +64,7 @@ private:
 public:
 	constexpr Fraction() noexcept {}
 	explicit constexpr Fraction(T n) noexcept : num{n} {}
-	explicit constexpr Fraction(T n, T d) noexcept
+	explicit constexpr Fraction(T n, T d)
 	{
 		if(d == 0)
 			throw Fraction_error{"Divide by zero!"};
@@ -77,7 +77,7 @@ public:
 	constexpr void set_num(T other) noexcept { num = other; }
 
 	constexpr T get_denom() const noexcept { return denom; }
-	constexpr void set_denom(T other) 
+	constexpr void set_denom(T other)
 	{
 		if(other == 0)
 			 throw Fraction_error{"Division by zero"};
@@ -109,7 +109,7 @@ public:
 		return os;
 	}
 	
-	constexpr friend Fraction operator+(Fraction a, Fraction b) noexcept
+	constexpr friend Fraction operator+(Fraction a, Fraction b)
 	{
 		a.reduct();
 		b.reduct();
@@ -118,12 +118,12 @@ public:
 		}
 		return Fraction(a.num + b.num, a.denom);
 	}
-	constexpr Fraction operator+=(Fraction a) noexcept { return *this = *this + a; }
-	constexpr Fraction operator+(T n) const noexcept { return Fraction(num + n * denom, denom); }
-	constexpr Fraction operator+=(T n) noexcept { return *this = *this + n; }
-	constexpr Fraction operator +() const noexcept { return *this; }
+	constexpr Fraction operator+=(Fraction a) { return *this = *this + a; }
+	constexpr Fraction operator+(T n) const { return Fraction(num + n * denom, denom); }
+	constexpr Fraction operator+=(T n) { return *this = *this + n; }
+	constexpr Fraction operator +() const { return *this; }
 	
-	constexpr friend Fraction operator-(Fraction a, Fraction b) noexcept
+	constexpr friend Fraction operator-(Fraction a, Fraction b)
 	{
 		a.reduct();
 		b.reduct();
@@ -132,20 +132,20 @@ public:
 		}		
 		return Fraction(a.num - b.num, a.denom);
 	}
-	constexpr Fraction operator-=(Fraction a) noexcept { return *this = *this - a; }
-	constexpr Fraction operator-(T n) const noexcept{ return Fraction(num - n * denom, denom); }
-	constexpr Fraction operator-=(T n) noexcept {	return *this = *this - n; }
-	constexpr Fraction operator -() const noexcept { return Fraction(num * (-1), denom); }
+	constexpr Fraction operator-=(Fraction a) { return *this = *this - a; }
+	constexpr Fraction operator-(T n) const { return Fraction(num - n * denom, denom); }
+	constexpr Fraction operator-=(T n) {	return *this = *this - n; }
+	constexpr Fraction operator -() const { return Fraction(num * (-1), denom); }
 	
-	constexpr friend Fraction operator*(Fraction a, Fraction b) noexcept 
+	constexpr friend Fraction operator*(Fraction a, Fraction b)
 	{ 
 		a.reduct();
 		b.reduct();
 		return Fraction(a.num * b.num, a.denom * b.denom);
 	}
-	constexpr Fraction operator*=(Fraction& a) noexcept { return *this = *this * a; }
-	constexpr Fraction operator*(T n) const noexcept{ return Fraction(num * n, denom); }
-	constexpr Fraction operator*=(T n) noexcept { return *this = *this * n; }
+	constexpr Fraction operator*=(Fraction& a) { return *this = *this * a; }
+	constexpr Fraction operator*(T n) const { return Fraction(num * n, denom); }
+	constexpr Fraction operator*=(T n) { return *this = *this * n; }
 	
 	constexpr friend Fraction operator/(Fraction a, Fraction b)
 	{
